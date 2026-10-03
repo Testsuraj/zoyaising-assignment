@@ -50,7 +50,7 @@ Customer message:
 """
 
 
-    chat = client.chats.create(model="gemini-2.5-flash"
+    chat = client.chats.create(model="gemini-3.1-flash-lite"
                                ,config=types.GenerateContentConfig(temperature=0,response_mime_type="application/json")
                                )
 
