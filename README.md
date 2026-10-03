@@ -1,131 +1,109 @@
-Customer Support Message Classifier
+# Gemini Customer Support Message Extractor
 
-A small GenAI-based customer support message classifier built with Python and the Google Gemini API.
+A Python application that uses the **Google Gemini API** to extract structured information from a customer support message.
 
-The application takes a customer support message and uses Gemini to extract:
+## Features
 
-Intent — the main reason for the customer's message
+The application extracts:
 
-Urgency — High, Medium, or Low
+* **Intent** — identifies the customer's main request.
+* **Urgency** — classifies the request as `High`, `Medium`, or `Low`.
+* **Order Number** — extracts the order number or returns `null` if none is found.
 
-Order Number — the order number if present, otherwise null
+## Example Input
 
-The extracted information is returned as valid JSON and printed to the console.
-
-Example
-Input
+```text
 My order #12344 arrived damaged, and I need a refund immediately!
+```
 
-Output
+## Example Output
+
+```json
 {
-  "intent": "Damaged Item and Refund Request",
+  "intent": "Refund Request",
   "urgency": "High",
   "order_number": "12344"
 }
+```
 
-Requirements
+## Tech Stack
 
-Python 3.9+
+* Python
+* Google Gemini API
+* `google-genai`
+* `python-dotenv`
 
-Gemini API key
+## Project Structure
 
-Internet connection
-
-Project Structure
-zoiya_assignment/
+```text
+zoyaising-assignment/
+│
 ├── main.py
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
 └── README.md
+```
 
-Installation
+## Setup
 
-Clone the repository:
+### 1. Clone the repository
 
-git clone <YOUR_GITHUB_REPOSITORY_URL>
-cd zoiya_assignment
+```bash
+git clone https://github.com/YOUR_USERNAME/zoyaising-assignment.git
+cd zoyaising-assignment
+```
 
+### 2. Install dependencies
 
-Install the required packages:
-
+```bash
 pip install -r requirements.txt
+```
 
-API Key Setup
+### 3. Configure the Gemini API key
 
-Create a .env file in the project directory:
+Create a `.env` file in the project directory:
 
+```env
 GEMINI_API_KEY=your_gemini_api_key_here
+```
 
+Do not commit the `.env` file to GitHub.
 
-Do not commit the .env file to GitHub.
+### 4. Run the application
 
-The application checks for the API key and displays an error if it is missing.
-
-Running the Application
-
-Run:
-
+```bash
 python main.py
+```
 
-
-The application will ask for a customer support message:
-
-Customer Support Message Classifier
-Enter your message: My order #12344 arrived damaged and I need a refund immediately.
-
-
-The extracted information will be displayed as JSON:
-
-{
-  "intent": "Damaged Item and Refund Request",
-  "urgency": "High",
-  "order_number": "12344"
-}
-
-Error Handling
+## Error Handling
 
 The application includes basic error handling for:
 
-Missing Gemini API key
+* Missing Gemini API key
+* Empty API responses
+* Invalid JSON responses
+* Invalid urgency values
+* API/request errors
 
-Empty customer messages
+## How It Works
 
-Gemini API request failures
+```text
+Customer Support Message
+          ↓
+      Gemini API
+          ↓
+   Structured JSON
+          ↓
+ ┌─────────────────┐
+ │ intent          │
+ │ urgency         │
+ │ order_number    │
+ └─────────────────┘
+          ↓
+    Console Output
+```
 
-Gemini API rate limits (429 RESOURCE_EXHAUSTED)
+## Assignment
 
-Empty API responses
-
-Invalid JSON returned by the model
-
-Missing required JSON fields
-
-Invalid urgency values
-
-For example, if the Gemini API rate limit is reached, the application displays a short message instead of exposing the complete API error response.
-
-Technologies Used
-
-Python
-
-Google Gemini API
-
-google-genai
-
-python-dotenv
-
-JSON
-
-Notes
-
-The model is instructed to return only the required JSON fields:
-
-intent
-urgency
-order_number
-
-
-The returned JSON is parsed and validated by the Python application before being printed.
-
-The Gemini API key is loaded from an environment variable rather than being hard-coded in the source code.
+This project was created as part of a customer support LLM extraction assignment requiring a Python dictionary/JSON response containing `intent`, `urgency`, and `order_number`.
